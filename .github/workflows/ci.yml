@@ -1,0 +1,29 @@
+name: apifile
+on: 
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  apifile:
+    runs-on: ubuntu-latest
+    name: build
+      
+    steps:    
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install redoc-cli
+        run: npm install -g redoc-cli
+
+      - name: Generate API documentation
+        run: redoc-cli bundle examples/v3.0/api-with-examples.yaml -o openapi.html
+
+      - name: ls
+        run : ls
